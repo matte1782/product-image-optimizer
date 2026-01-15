@@ -290,7 +290,7 @@ def main():
 
     # Print processing info
     if args.verbose:
-        print(f"\nProcessing Configuration:")
+        print("\nProcessing Configuration:")
         print(f"  Target size: {config.target_width} x {config.target_height}px")
         print(f"  Background removal: {config.remove_background}")
         print(f"  Auto-crop: {config.auto_crop}")
@@ -312,14 +312,14 @@ def main():
     )
 
     # Print results
-    print(f"\n{'='*60}")
-    print(f"Processing complete!")
-    print(f"{'='*60}")
+    print("\n" + "="*60)
+    print("Processing complete!")
+    print("="*60)
     print(f"  Total:   {results['total']}")
     print(f"  Success: {results['success']}")
     print(f"  Failed:  {results['failed']}")
     print(f"  Output:  {output_dir.absolute()}")
-    print(f"{'='*60}")
+    print("="*60)
 
     # Print errors if any
     if results["failed"] > 0:
