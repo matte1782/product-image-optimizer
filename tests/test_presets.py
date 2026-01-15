@@ -6,8 +6,6 @@ from product_image_optimizer.presets import (
     get_theme,
     list_presets,
     list_themes,
-    PROCESSING_PRESETS,
-    GUI_THEMES,
 )
 
 

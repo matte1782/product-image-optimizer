@@ -14,7 +14,6 @@ from tkinter import ttk, filedialog, messagebox
 import threading
 import queue
 from pathlib import Path
-from datetime import datetime
 import zipfile
 from typing import List, Optional
 
@@ -541,7 +540,7 @@ def launch_gui(theme_name: str = "default"):
     else:
         root = tk.Tk()
 
-    app = ProductImageOptimizerGUI(root, theme)
+    ProductImageOptimizerGUI(root, theme)
     root.mainloop()
 
 

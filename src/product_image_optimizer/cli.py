@@ -9,9 +9,8 @@ import sys
 from pathlib import Path
 from typing import List
 import zipfile
-from datetime import datetime
 
-from .config import ProcessingConfig, ConfigManager
+from .config import ConfigManager
 from .processor import batch_process
 from .presets import get_preset, list_presets, list_themes
 
@@ -57,7 +56,7 @@ def collect_image_files(paths: List[str]) -> List[Path]:
         path = Path(path_str)
 
         if not path.exists():
-            print(f"Warning: Path not found: {path}")
+            print("Warning: Path not found: {}".format(path))
             continue
 
         if path.is_file():
@@ -70,7 +69,7 @@ def collect_image_files(paths: List[str]) -> List[Path]:
                 # Single image
                 image_files.append(path)
             else:
-                print(f"Warning: Unsupported file type: {path}")
+                print("Warning: Unsupported file type: {}".format(path))
 
         elif path.is_dir():
             # Recursively find images in directory

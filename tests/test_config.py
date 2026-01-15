@@ -1,8 +1,6 @@
 """Tests for configuration module."""
 
-import pytest
 from pathlib import Path
-import json
 import tempfile
 
 from product_image_optimizer.config import ProcessingConfig, GUITheme, ConfigManager
