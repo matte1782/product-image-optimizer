@@ -41,33 +41,30 @@ from .presets import (
     get_preset,
     get_theme,
     list_presets,
-    list_themes
+    list_themes,
 )
 from .cli import main as cli_main
 from .gui import launch_gui
 
 __all__ = [
     # Core
-    'ImageProcessor',
-    'ProcessingConfig',
-    'GUITheme',
-    'ConfigManager',
-    'batch_process',
-
+    "ImageProcessor",
+    "ProcessingConfig",
+    "GUITheme",
+    "ConfigManager",
+    "batch_process",
     # Presets
-    'PROCESSING_PRESETS',
-    'GUI_THEMES',
-    'get_preset',
-    'get_theme',
-    'list_presets',
-    'list_themes',
-
+    "PROCESSING_PRESETS",
+    "GUI_THEMES",
+    "get_preset",
+    "get_theme",
+    "list_presets",
+    "list_themes",
     # Interfaces
-    'cli_main',
-    'launch_gui',
-
+    "cli_main",
+    "launch_gui",
     # Metadata
-    '__version__',
-    '__author__',
-    '__license__',
+    "__version__",
+    "__author__",
+    "__license__",
 ]

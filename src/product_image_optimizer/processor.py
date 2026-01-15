@@ -34,9 +34,7 @@ class ImageProcessor:
         self.config = config or ProcessingConfig()
 
     def auto_crop_transparent(
-        self,
-        img: Image.Image,
-        padding: Optional[int] = None
+        self, img: Image.Image, padding: Optional[int] = None
     ) -> Image.Image:
         """
         Auto-crop image to transparent bounds with optional padding.
@@ -48,7 +46,7 @@ class ImageProcessor:
         Returns:
             Cropped image
         """
-        if img.mode != 'RGBA':
+        if img.mode != "RGBA":
             return img
 
         padding = padding if padding is not None else self.config.crop_padding
@@ -137,15 +135,12 @@ class ImageProcessor:
 
         # Step 4: Resize with high quality
         img_resized = img_cropped.resize(
-            (new_width, new_height),
-            Image.Resampling.LANCZOS
+            (new_width, new_height), Image.Resampling.LANCZOS
         )
 
         # Step 5: Create canvas and center
         canvas = Image.new(
-            'RGBA',
-            (self.config.target_width, self.config.target_height),
-            (0, 0, 0, 0)
+            "RGBA", (self.config.target_width, self.config.target_height), (0, 0, 0, 0)
         )
 
         paste_x = (self.config.target_width - new_width) // 2
@@ -166,8 +161,8 @@ class ImageProcessor:
         """
         try:
             # Ensure RGB mode for rembg
-            if img.mode != 'RGB':
-                img = img.convert('RGB')
+            if img.mode != "RGB":
+                img = img.convert("RGB")
 
             # Remove background
             output = remove(img)
@@ -177,15 +172,15 @@ class ImageProcessor:
             # Handle expected errors from rembg or PIL
             print(f"Background removal failed: {e}")
             # Fallback: convert to RGBA without removal
-            if img.mode != 'RGBA':
-                img = img.convert('RGBA')
+            if img.mode != "RGBA":
+                img = img.convert("RGBA")
             return img
 
     def process_image(
         self,
         input_path: Path,
         output_path: Path,
-        progress_callback: Optional[Callable[[str], None]] = None
+        progress_callback: Optional[Callable[[str], None]] = None,
     ) -> Tuple[bool, Optional[str], Optional[dict]]:
         """
         Process a single image through the full pipeline.
@@ -208,9 +203,9 @@ class ImageProcessor:
             - metadata: Dict with file_size_kb, dimensions, etc.
         """
         metadata = {
-            'input': str(input_path),
-            'output': str(output_path),
-            'config': self.config.to_dict(),
+            "input": str(input_path),
+            "output": str(output_path),
+            "config": self.config.to_dict(),
         }
 
         try:
@@ -219,8 +214,8 @@ class ImageProcessor:
                 progress_callback(f"Loading: {input_path.name}")
 
             with Image.open(input_path) as img:
-                metadata['original_size'] = img.size
-                metadata['original_mode'] = img.mode
+                metadata["original_size"] = img.size
+                metadata["original_mode"] = img.mode
 
                 # Load the image data (PIL uses lazy loading)
                 img.load()
@@ -233,14 +228,16 @@ class ImageProcessor:
                     img_no_bg = self.remove_background(img)
                 else:
                     # Ensure RGBA mode
-                    img_no_bg = img.convert('RGBA') if img.mode != 'RGBA' else img.copy()
+                    img_no_bg = (
+                        img.convert("RGBA") if img.mode != "RGBA" else img.copy()
+                    )
 
             # Step 2: Resize to target
             if progress_callback:
                 progress_callback(f"Resizing: {input_path.name}")
 
             img_resized = self.resize_to_target(img_no_bg)
-            metadata['output_size'] = img_resized.size
+            metadata["output_size"] = img_resized.size
 
             # Step 3: Save optimized output
             if progress_callback:
@@ -253,11 +250,11 @@ class ImageProcessor:
                 output_path,
                 format=self.config.output_format,
                 optimize=self.config.optimize,
-                compress_level=self.config.compress_level
+                compress_level=self.config.compress_level,
             )
 
             # Get output file stats
-            metadata['file_size_kb'] = output_path.stat().st_size / 1024
+            metadata["file_size_kb"] = output_path.stat().st_size / 1024
 
             return True, None, metadata
 
@@ -274,7 +271,7 @@ def batch_process(
     input_paths: List[Path],
     output_dir: Path,
     config: Optional[ProcessingConfig] = None,
-    progress_callback: Optional[Callable[[int, int, str], None]] = None
+    progress_callback: Optional[Callable[[int, int, str], None]] = None,
 ) -> dict:
     """
     Batch process multiple images.
@@ -291,12 +288,7 @@ def batch_process(
     processor = ImageProcessor(config)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    results = {
-        'total': len(input_paths),
-        'success': 0,
-        'failed': 0,
-        'results': []
-    }
+    results = {"total": len(input_paths), "success": 0, "failed": 0, "results": []}
 
     for i, input_path in enumerate(input_paths, 1):
         # Generate output filename
@@ -310,16 +302,18 @@ def batch_process(
         success, error, metadata = processor.process_image(input_path, output_path)
 
         if success:
-            results['success'] += 1
+            results["success"] += 1
         else:
-            results['failed'] += 1
+            results["failed"] += 1
 
-        results['results'].append({
-            'input': str(input_path),
-            'output': str(output_path),
-            'success': success,
-            'error': error,
-            'metadata': metadata
-        })
+        results["results"].append(
+            {
+                "input": str(input_path),
+                "output": str(output_path),
+                "success": success,
+                "error": error,
+                "metadata": metadata,
+            }
+        )
 
     return results

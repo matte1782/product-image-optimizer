@@ -44,20 +44,20 @@ class ProcessingConfig:
         return asdict(self)
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> 'ProcessingConfig':
+    def from_dict(cls, data: Dict[str, Any]) -> "ProcessingConfig":
         """Create from dictionary."""
         return cls(**{k: v for k, v in data.items() if k in cls.__dataclass_fields__})
 
     @classmethod
-    def from_json_file(cls, path: Path) -> 'ProcessingConfig':
+    def from_json_file(cls, path: Path) -> "ProcessingConfig":
         """Load from JSON file."""
-        with open(path, 'r') as f:
+        with open(path, "r") as f:
             data = json.load(f)
         return cls.from_dict(data)
 
     def to_json_file(self, path: Path) -> None:
         """Save to JSON file."""
-        with open(path, 'w') as f:
+        with open(path, "w") as f:
             json.dump(self.to_dict(), f, indent=2)
 
 
@@ -66,20 +66,20 @@ class GUITheme:
     """GUI color theme configuration."""
 
     name: str = "default"
-    primary: str = "#2196F3"      # Blue
-    dark: str = "#1A1A1A"         # Dark background
-    surface: str = "#2B2B2B"      # Surface color
-    text: str = "#FFFFFF"         # Text color
-    success: str = "#4CAF50"      # Success green
-    warning: str = "#FF9800"      # Warning orange
-    accent: str = "#64B5F6"       # Light accent
+    primary: str = "#2196F3"  # Blue
+    dark: str = "#1A1A1A"  # Dark background
+    surface: str = "#2B2B2B"  # Surface color
+    text: str = "#FFFFFF"  # Text color
+    success: str = "#4CAF50"  # Success green
+    warning: str = "#FF9800"  # Warning orange
+    accent: str = "#64B5F6"  # Light accent
 
     def to_dict(self) -> Dict[str, str]:
         """Convert to dictionary."""
         return asdict(self)
 
     @classmethod
-    def from_dict(cls, data: Dict[str, str]) -> 'GUITheme':
+    def from_dict(cls, data: Dict[str, str]) -> "GUITheme":
         """Create from dictionary."""
         return cls(**data)
 
@@ -120,12 +120,12 @@ class ConfigManager:
         """Load theme from file."""
         theme_path = self.config_dir / f"theme_{name}.json"
         if theme_path.exists():
-            with open(theme_path, 'r') as f:
+            with open(theme_path, "r") as f:
                 data = json.load(f)
             self.gui_theme = GUITheme.from_dict(data)
 
     def save_theme(self, name: str) -> None:
         """Save theme to file."""
         theme_path = self.config_dir / f"theme_{name}.json"
-        with open(theme_path, 'w') as f:
+        with open(theme_path, "w") as f:
             json.dump(self.gui_theme.to_dict(), f, indent=2)

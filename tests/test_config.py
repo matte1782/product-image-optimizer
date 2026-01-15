@@ -30,7 +30,7 @@ class TestProcessingConfig:
             target_width=2000,
             target_height=3000,
             fill_ratio=0.9,
-            remove_background=False
+            remove_background=False,
         )
         assert config.target_width == 2000
         assert config.target_height == 3000
@@ -42,11 +42,11 @@ class TestProcessingConfig:
         config = ProcessingConfig(target_width=1500)
         data = config.to_dict()
         assert isinstance(data, dict)
-        assert data['target_width'] == 1500
+        assert data["target_width"] == 1500
 
     def test_from_dict(self):
         """Test creating from dictionary."""
-        data = {'target_width': 1500, 'target_height': 2000}
+        data = {"target_width": 1500, "target_height": 2000}
         config = ProcessingConfig.from_dict(data)
         assert config.target_width == 1500
         assert config.target_height == 2000
@@ -55,7 +55,7 @@ class TestProcessingConfig:
         """Test JSON save/load roundtrip."""
         config = ProcessingConfig(target_width=2500, fill_ratio=0.75)
 
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as f:
             temp_path = Path(f.name)
 
         try:
@@ -88,8 +88,8 @@ class TestGUITheme:
         """Test theme dictionary conversion."""
         theme = GUITheme(name="test", primary="#FF0000")
         data = theme.to_dict()
-        assert data['name'] == "test"
-        assert data['primary'] == "#FF0000"
+        assert data["name"] == "test"
+        assert data["primary"] == "#FF0000"
 
 
 class TestConfigManager:

@@ -20,6 +20,7 @@ from typing import List, Optional
 
 try:
     from tkinterdnd2 import DND_FILES, TkinterDnD
+
     HAS_DND = True
 except ImportError:
     HAS_DND = False
@@ -42,7 +43,7 @@ class ProductImageOptimizerGUI:
             theme: GUI theme. Uses default if not provided.
         """
         self.root = root
-        self.theme = theme or GUI_THEMES['default']
+        self.theme = theme or GUI_THEMES["default"]
         self.config = ProcessingConfig()
         self.processor = ImageProcessor(self.config)
 
@@ -79,7 +80,7 @@ class ProductImageOptimizerGUI:
             text="PRODUCT IMAGE OPTIMIZER",
             font=("Segoe UI", 24, "bold"),
             bg=self.theme.primary,
-            fg=self.theme.text
+            fg=self.theme.text,
         )
         title.pack(pady=(20, 5))
 
@@ -88,7 +89,7 @@ class ProductImageOptimizerGUI:
             text="Professional image processing for e-commerce and social media",
             font=("Segoe UI", 10),
             bg=self.theme.primary,
-            fg=self.theme.text
+            fg=self.theme.text,
         )
         subtitle.pack()
 
@@ -122,7 +123,7 @@ class ProductImageOptimizerGUI:
             text="⚙️ Preset Configuration",
             font=("Segoe UI", 11, "bold"),
             bg=self.theme.surface,
-            fg=self.theme.text
+            fg=self.theme.text,
         )
         preset_label.pack(anchor=tk.W, pady=(0, 10))
 
@@ -132,7 +133,7 @@ class ProductImageOptimizerGUI:
         for preset in preset_options:
             rb = tk.Radiobutton(
                 preset_frame,
-                text=preset.replace('_', ' ').title(),
+                text=preset.replace("_", " ").title(),
                 variable=self.preset_var,
                 value=preset,
                 bg=self.theme.surface,
@@ -141,7 +142,7 @@ class ProductImageOptimizerGUI:
                 activebackground=self.theme.surface,
                 activeforeground=self.theme.text,
                 font=("Segoe UI", 9),
-                command=self.on_preset_changed
+                command=self.on_preset_changed,
             )
             rb.pack(anchor=tk.W, pady=2)
 
@@ -156,7 +157,7 @@ class ProductImageOptimizerGUI:
             text="🔧 Custom Settings",
             font=("Segoe UI", 11, "bold"),
             bg=self.theme.surface,
-            fg=self.theme.text
+            fg=self.theme.text,
         )
         settings_label.pack(anchor=tk.W, pady=(0, 10))
 
@@ -169,32 +170,23 @@ class ProductImageOptimizerGUI:
             text="Dimensions:",
             bg=self.theme.surface,
             fg=self.theme.text,
-            font=("Segoe UI", 9)
+            font=("Segoe UI", 9),
         ).pack(side=tk.LEFT)
 
         self.width_var = tk.IntVar(value=2000)
         self.height_var = tk.IntVar(value=2000)
 
         width_entry = tk.Entry(
-            dim_frame,
-            textvariable=self.width_var,
-            width=6,
-            font=("Segoe UI", 9)
+            dim_frame, textvariable=self.width_var, width=6, font=("Segoe UI", 9)
         )
         width_entry.pack(side=tk.LEFT, padx=5)
 
-        tk.Label(
-            dim_frame,
-            text="x",
-            bg=self.theme.surface,
-            fg=self.theme.text
-        ).pack(side=tk.LEFT)
+        tk.Label(dim_frame, text="x", bg=self.theme.surface, fg=self.theme.text).pack(
+            side=tk.LEFT
+        )
 
         height_entry = tk.Entry(
-            dim_frame,
-            textvariable=self.height_var,
-            width=6,
-            font=("Segoe UI", 9)
+            dim_frame, textvariable=self.height_var, width=6, font=("Segoe UI", 9)
         )
         height_entry.pack(side=tk.LEFT, padx=5)
 
@@ -211,7 +203,7 @@ class ProductImageOptimizerGUI:
             selectcolor=self.theme.primary,
             activebackground=self.theme.surface,
             activeforeground=self.theme.text,
-            font=("Segoe UI", 9)
+            font=("Segoe UI", 9),
         ).pack(anchor=tk.W, pady=3)
 
         tk.Checkbutton(
@@ -223,7 +215,7 @@ class ProductImageOptimizerGUI:
             selectcolor=self.theme.primary,
             activebackground=self.theme.surface,
             activeforeground=self.theme.text,
-            font=("Segoe UI", 9)
+            font=("Segoe UI", 9),
         ).pack(anchor=tk.W, pady=3)
 
         # Process button
@@ -242,7 +234,7 @@ class ProductImageOptimizerGUI:
             pady=15,
             cursor="hand2",
             state=tk.DISABLED,
-            command=self.start_processing
+            command=self.start_processing,
         )
         self.process_btn.pack(pady=15)
 
@@ -253,14 +245,14 @@ class ProductImageOptimizerGUI:
                 parent,
                 bg=self.theme.surface,
                 highlightthickness=2,
-                highlightbackground=self.theme.primary
+                highlightbackground=self.theme.primary,
             )
         else:
             drop_frame = tk.Frame(
                 parent,
                 bg=self.theme.surface,
                 highlightthickness=2,
-                highlightbackground=self.theme.warning
+                highlightbackground=self.theme.warning,
             )
 
         drop_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 15))
@@ -270,7 +262,7 @@ class ProductImageOptimizerGUI:
             text="📁",
             font=("Segoe UI", 64),
             bg=self.theme.surface,
-            fg=self.theme.text
+            fg=self.theme.text,
         )
         icon.pack(pady=(60, 20))
 
@@ -285,7 +277,7 @@ class ProductImageOptimizerGUI:
             font=("Segoe UI", 14),
             bg=self.theme.surface,
             fg=self.theme.text,
-            justify=tk.CENTER
+            justify=tk.CENTER,
         )
         drop_label.pack()
 
@@ -294,7 +286,7 @@ class ProductImageOptimizerGUI:
             text="Supports: JPG, PNG, ZIP",
             font=("Segoe UI", 10),
             bg=self.theme.surface,
-            fg=self.theme.text
+            fg=self.theme.text,
         )
         formats.pack(pady=10)
 
@@ -303,19 +295,19 @@ class ProductImageOptimizerGUI:
             text="",
             font=("Segoe UI", 10, "bold"),
             bg=self.theme.surface,
-            fg=self.theme.success
+            fg=self.theme.success,
         )
         self.files_label.pack(pady=10)
 
         # Enable drag & drop if available
         if HAS_DND:
             drop_frame.drop_target_register(DND_FILES)
-            drop_frame.dnd_bind('<<Drop>>', self.on_drop)
+            drop_frame.dnd_bind("<<Drop>>", self.on_drop)
 
         # Click to browse
-        drop_frame.bind('<Button-1>', lambda e: self.browse_files())
-        icon.bind('<Button-1>', lambda e: self.browse_files())
-        drop_label.bind('<Button-1>', lambda e: self.browse_files())
+        drop_frame.bind("<Button-1>", lambda e: self.browse_files())
+        icon.bind("<Button-1>", lambda e: self.browse_files())
+        drop_label.bind("<Button-1>", lambda e: self.browse_files())
 
     def create_progress_panel(self, parent):
         """Create progress display panel."""
@@ -326,24 +318,24 @@ class ProductImageOptimizerGUI:
             text="",
             font=("Segoe UI", 11, "bold"),
             bg=self.theme.surface,
-            fg=self.theme.text
+            fg=self.theme.text,
         )
         self.progress_label.pack(pady=10)
 
         style = ttk.Style()
-        style.theme_use('clam')
+        style.theme_use("clam")
         style.configure(
             "Custom.Horizontal.TProgressbar",
             troughcolor=self.theme.dark,
             background=self.theme.primary,
-            thickness=25
+            thickness=25,
         )
 
         self.progress_bar = ttk.Progressbar(
             self.progress_frame,
             style="Custom.Horizontal.TProgressbar",
-            mode='determinate',
-            length=450
+            mode="determinate",
+            length=450,
         )
         self.progress_bar.pack(pady=10)
 
@@ -352,7 +344,7 @@ class ProductImageOptimizerGUI:
             text="",
             font=("Segoe UI", 9),
             bg=self.theme.surface,
-            fg=self.theme.text
+            fg=self.theme.text,
         )
         self.status_label.pack(pady=5)
 
@@ -379,8 +371,8 @@ class ProductImageOptimizerGUI:
             filetypes=[
                 ("Images", "*.jpg *.jpeg *.png"),
                 ("ZIP files", "*.zip"),
-                ("All files", "*.*")
-            ]
+                ("All files", "*.*"),
+            ],
         )
         if files:
             self.load_files(files)
@@ -392,9 +384,9 @@ class ProductImageOptimizerGUI:
         for file_path in files:
             path = Path(file_path)
 
-            if path.suffix.lower() in ['.jpg', '.jpeg', '.png']:
+            if path.suffix.lower() in [".jpg", ".jpeg", ".png"]:
                 self.image_files.append(path)
-            elif path.suffix.lower() == '.zip':
+            elif path.suffix.lower() == ".zip":
                 extracted = self.extract_zip(path)
                 self.image_files.extend(extracted)
 
@@ -412,27 +404,32 @@ class ProductImageOptimizerGUI:
         import tempfile
 
         # Use temporary directory
-        temp_dir = Path(tempfile.mkdtemp(prefix='product_img_opt_'))
+        temp_dir = Path(tempfile.mkdtemp(prefix="product_img_opt_"))
 
         try:
-            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            with zipfile.ZipFile(zip_path, "r") as zip_ref:
                 # Validate ZIP entries to prevent path traversal
                 for member in zip_ref.namelist():
                     # Check for path traversal attempts
-                    if member.startswith('/') or '..' in member or member.startswith('\\'):
+                    if (
+                        member.startswith("/")
+                        or ".." in member
+                        or member.startswith("\\")
+                    ):
                         raise ValueError(f"Unsafe path in ZIP: {member}")
 
                 # Safe to extract
                 zip_ref.extractall(temp_dir)
 
             images = []
-            for ext in ['*.jpg', '*.jpeg', '*.png']:
+            for ext in ["*.jpg", "*.jpeg", "*.png"]:
                 images.extend(temp_dir.rglob(ext))
 
             return images
         except Exception:
             # Clean up on error
             import shutil
+
             shutil.rmtree(temp_dir, ignore_errors=True)
             raise
 
@@ -482,15 +479,17 @@ class ProductImageOptimizerGUI:
             else:
                 failed += 1
 
-            self.processing_queue.put({
-                'processed': i,
-                'total': total,
-                'success': success,
-                'failed': failed,
-                'current': img_file.name
-            })
+            self.processing_queue.put(
+                {
+                    "processed": i,
+                    "total": total,
+                    "success": success,
+                    "failed": failed,
+                    "current": img_file.name,
+                }
+            )
 
-        self.processing_queue.put({'done': True, 'output_dir': str(self.output_dir)})
+        self.processing_queue.put({"done": True, "output_dir": str(self.output_dir)})
 
     def update_progress(self):
         """Update progress from queue."""
@@ -498,23 +497,22 @@ class ProductImageOptimizerGUI:
             while not self.processing_queue.empty():
                 data = self.processing_queue.get_nowait()
 
-                if 'done' in data:
+                if "done" in data:
                     self.is_processing = False
-                    self.progress_bar['value'] = 100
+                    self.progress_bar["value"] = 100
                     self.progress_label.config(text="✅ Complete!")
                     self.status_label.config(
-                        text=f"Saved to: {data['output_dir']}",
-                        fg=self.theme.success
+                        text=f"Saved to: {data['output_dir']}", fg=self.theme.success
                     )
                     messagebox.showinfo(
                         "Complete",
-                        f"All images processed!\n\nOutput: {data['output_dir']}"
+                        f"All images processed!\n\nOutput: {data['output_dir']}",
                     )
                     self.process_btn.config(state=tk.NORMAL)
                     return
 
-                progress = (data['processed'] / data['total']) * 100
-                self.progress_bar['value'] = progress
+                progress = (data["processed"] / data["total"]) * 100
+                self.progress_bar["value"] = progress
                 self.progress_label.config(
                     text=f"Processing {data['processed']}/{data['total']}"
                 )
@@ -536,7 +534,7 @@ def launch_gui(theme_name: str = "default"):
     Args:
         theme_name: Theme to use (from GUI_THEMES)
     """
-    theme = GUI_THEMES.get(theme_name, GUI_THEMES['default'])
+    theme = GUI_THEMES.get(theme_name, GUI_THEMES["default"])
 
     if HAS_DND:
         root = TkinterDnD.Tk()
@@ -547,5 +545,5 @@ def launch_gui(theme_name: str = "default"):
     root.mainloop()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     launch_gui()

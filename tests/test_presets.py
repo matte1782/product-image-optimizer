@@ -7,7 +7,7 @@ from product_image_optimizer.presets import (
     list_presets,
     list_themes,
     PROCESSING_PRESETS,
-    GUI_THEMES
+    GUI_THEMES,
 )
 
 

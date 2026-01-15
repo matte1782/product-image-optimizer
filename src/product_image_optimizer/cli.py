@@ -21,14 +21,14 @@ def extract_zip(zip_path: Path) -> List[Path]:
     import tempfile
 
     # Use temporary directory that auto-cleans
-    temp_dir = Path(tempfile.mkdtemp(prefix='product_img_opt_'))
+    temp_dir = Path(tempfile.mkdtemp(prefix="product_img_opt_"))
 
     try:
-        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        with zipfile.ZipFile(zip_path, "r") as zip_ref:
             # Validate ZIP entries to prevent path traversal
             for member in zip_ref.namelist():
                 # Check for path traversal attempts
-                if member.startswith('/') or '..' in member or member.startswith('\\'):
+                if member.startswith("/") or ".." in member or member.startswith("\\"):
                     raise ValueError(f"Unsafe path in ZIP: {member}")
 
             # Safe to extract
@@ -36,13 +36,14 @@ def extract_zip(zip_path: Path) -> List[Path]:
 
         # Find all images
         image_files = []
-        for ext in ['*.jpg', '*.jpeg', '*.png']:
+        for ext in ["*.jpg", "*.jpeg", "*.png"]:
             image_files.extend(temp_dir.rglob(ext))
 
         return image_files
     except Exception:
         # Clean up on error
         import shutil
+
         shutil.rmtree(temp_dir, ignore_errors=True)
         raise
 
@@ -50,7 +51,7 @@ def extract_zip(zip_path: Path) -> List[Path]:
 def collect_image_files(paths: List[str]) -> List[Path]:
     """Collect image files from paths (files, directories, or ZIPs)."""
     image_files = []
-    supported_exts = {'.jpg', '.jpeg', '.png'}
+    supported_exts = {".jpg", ".jpeg", ".png"}
 
     for path_str in paths:
         path = Path(path_str)
@@ -60,7 +61,7 @@ def collect_image_files(paths: List[str]) -> List[Path]:
             continue
 
         if path.is_file():
-            if path.suffix.lower() == '.zip':
+            if path.suffix.lower() == ".zip":
                 # Extract ZIP
                 print(f"Extracting ZIP: {path}")
                 extracted = extract_zip(path)
@@ -74,9 +75,9 @@ def collect_image_files(paths: List[str]) -> List[Path]:
         elif path.is_dir():
             # Recursively find images in directory
             for ext in supported_exts:
-                image_files.extend(path.rglob(f'*{ext}'))
+                image_files.extend(path.rglob(f"*{ext}"))
                 # Also check uppercase
-                image_files.extend(path.rglob(f'*{ext.upper()}'))
+                image_files.extend(path.rglob(f"*{ext.upper()}"))
 
     return image_files
 
@@ -84,7 +85,7 @@ def collect_image_files(paths: List[str]) -> List[Path]:
 def create_parser() -> argparse.ArgumentParser:
     """Create argument parser."""
     parser = argparse.ArgumentParser(
-        description='Product Image Optimizer - Professional image processing for e-commerce and social media',
+        description="Product Image Optimizer - Professional image processing for e-commerce and social media",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -107,117 +108,91 @@ Examples:
   product-image-optimizer --list-presets
 
 For more information, visit: https://github.com/matte1782/product-image-optimizer
-        """
+        """,
     )
 
     # Input/Output
     parser.add_argument(
-        'input',
-        nargs='*',
-        help='Input files, directories, or ZIP archives'
+        "input", nargs="*", help="Input files, directories, or ZIP archives"
     )
     parser.add_argument(
-        '-o', '--output',
+        "-o",
+        "--output",
         type=str,
         required=False,
-        help='Output directory (default: ./output)'
+        help="Output directory (default: ./output)",
     )
 
     # Presets
     parser.add_argument(
-        '--preset',
+        "--preset",
         type=str,
-        help=f'Use preset configuration (available: {", ".join(list_presets())})'
+        help=f'Use preset configuration (available: {", ".join(list_presets())})',
     )
     parser.add_argument(
-        '--list-presets',
-        action='store_true',
-        help='List all available presets'
+        "--list-presets", action="store_true", help="List all available presets"
     )
     parser.add_argument(
-        '--list-themes',
-        action='store_true',
-        help='List all available GUI themes'
+        "--list-themes", action="store_true", help="List all available GUI themes"
     )
 
     # Dimensions
     parser.add_argument(
-        '-w', '--width',
-        type=int,
-        help='Target width in pixels (default: 1000)'
+        "-w", "--width", type=int, help="Target width in pixels (default: 1000)"
     )
     parser.add_argument(
-        '--height',  # Removed -h to avoid conflict with --help
+        "--height",  # Removed -h to avoid conflict with --help
         type=int,
-        help='Target height in pixels (default: 1000)'
+        help="Target height in pixels (default: 1000)",
     )
 
     # Processing options
     parser.add_argument(
-        '--no-bg-removal',
-        action='store_true',
-        help='Disable background removal'
+        "--no-bg-removal", action="store_true", help="Disable background removal"
     )
     parser.add_argument(
-        '--no-auto-crop',
-        action='store_true',
-        help='Disable auto-cropping'
+        "--no-auto-crop", action="store_true", help="Disable auto-cropping"
     )
     parser.add_argument(
-        '--fill-ratio',
-        type=float,
-        help='Canvas fill ratio (0.0-1.0, default: 0.80)'
+        "--fill-ratio", type=float, help="Canvas fill ratio (0.0-1.0, default: 0.80)"
     )
     parser.add_argument(
-        '--padding',
-        type=int,
-        help='Crop padding in pixels (default: 20)'
+        "--padding", type=int, help="Crop padding in pixels (default: 20)"
     )
 
     # Output options
     parser.add_argument(
-        '--format',
+        "--format",
         type=str,
-        choices=['PNG', 'JPEG'],
-        help='Output format (default: PNG)'
+        choices=["PNG", "JPEG"],
+        help="Output format (default: PNG)",
     )
     parser.add_argument(
-        '--compress',
+        "--compress",
         type=int,
         choices=range(0, 10),
-        metavar='0-9',
-        help='PNG compression level (default: 6)'
+        metavar="0-9",
+        help="PNG compression level (default: 6)",
     )
     parser.add_argument(
-        '--no-optimize',
-        action='store_true',
-        help='Disable output optimization'
+        "--no-optimize", action="store_true", help="Disable output optimization"
     )
 
     # Config management
     parser.add_argument(
-        '--save-config',
+        "--save-config",
         type=str,
-        metavar='NAME',
-        help='Save current settings as config'
+        metavar="NAME",
+        help="Save current settings as config",
     )
     parser.add_argument(
-        '--load-config',
-        type=str,
-        metavar='NAME',
-        help='Load settings from config'
+        "--load-config", type=str, metavar="NAME", help="Load settings from config"
     )
 
     # Misc
+    parser.add_argument("-v", "--verbose", action="store_true", help="Verbose output")
     parser.add_argument(
-        '-v', '--verbose',
-        action='store_true',
-        help='Verbose output'
-    )
-    parser.add_argument(
-        '--version',
-        action='version',
-        version='Product Image Optimizer v1.0.0'
+        "--version", action="version", version="Product Image Optimizer v1.0.0"
     )
 
     return parser
@@ -334,7 +309,7 @@ def main():
         image_files,
         output_dir,
         config,
-        progress_callback=progress_callback if args.verbose else None
+        progress_callback=progress_callback if args.verbose else None,
     )
 
     # Print results
@@ -348,14 +323,14 @@ def main():
     print(f"{'='*60}")
 
     # Print errors if any
-    if results['failed'] > 0:
+    if results["failed"] > 0:
         print("\nErrors:")
-        for result in results['results']:
-            if not result['success']:
+        for result in results["results"]:
+            if not result["success"]:
                 print(f"  ✗ {result['input']}: {result['error']}")
 
-    sys.exit(0 if results['failed'] == 0 else 1)
+    sys.exit(0 if results["failed"] == 0 else 1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
