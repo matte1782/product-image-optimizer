@@ -312,14 +312,14 @@ def main():
     )
 
     # Print results
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("Processing complete!")
-    print("="*60)
+    print("=" * 60)
     print(f"  Total:   {results['total']}")
     print(f"  Success: {results['success']}")
     print(f"  Failed:  {results['failed']}")
     print(f"  Output:  {output_dir.absolute()}")
-    print("="*60)
+    print("=" * 60)
 
     # Print errors if any
     if results["failed"] > 0:
