@@ -1,0 +1,10 @@
+# Core dependencies
+Pillow>=10.0.0
+rembg>=2.0.50
+numpy>=1.24.0
+
+# GUI (optional)
+tkinterdnd2>=0.3.0; platform_system != "Linux"
+
+# CLI
+argparse>=1.4.0
