@@ -57,11 +57,11 @@ class TestImageProcessor:
     def test_auto_crop_transparent(self, test_image_with_alpha):
         """Test auto-cropping transparent areas."""
         processor = ImageProcessor()
-        img = Image.open(test_image_with_alpha)
-        cropped = processor.auto_crop_transparent(img, padding=0)
+        with Image.open(test_image_with_alpha) as img:
+            cropped = processor.auto_crop_transparent(img, padding=0)
 
-        # Should have cropped some transparent areas
-        assert cropped.width < img.width
+            # Should have cropped some transparent areas
+            assert cropped.width < img.width
 
     def test_resize_to_target(self):
         """Test resizing to target dimensions."""
@@ -92,8 +92,8 @@ class TestImageProcessor:
             assert metadata["output_size"] == (800, 800)
 
             # Check output image
-            output_img = Image.open(output_path)
-            assert output_img.size == (800, 800)
+            with Image.open(output_path) as output_img:
+                assert output_img.size == (800, 800)
 
     def test_process_image_metadata(self, test_image):
         """Test that metadata is returned correctly."""
