@@ -41,7 +41,7 @@ setup(
     python_requires=">=3.8",
     install_requires=[
         "Pillow>=10.0.0",
-        "rembg>=2.0.50",
+        "rembg[cpu]>=2.0.50",
         "numpy>=1.24.0",
     ],
     extras_require={
