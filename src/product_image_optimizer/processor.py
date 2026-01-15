@@ -5,7 +5,7 @@ Handles background removal, resizing, cropping, and optimization.
 """
 
 from pathlib import Path
-from typing import Optional, Callable, Tuple
+from typing import Optional, Callable, Tuple, List
 from PIL import Image
 from rembg import remove
 
@@ -271,7 +271,7 @@ class ImageProcessor:
 
 
 def batch_process(
-    input_paths: list[Path],
+    input_paths: List[Path],
     output_dir: Path,
     config: Optional[ProcessingConfig] = None,
     progress_callback: Optional[Callable[[int, int, str], None]] = None
