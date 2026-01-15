@@ -2,10 +2,35 @@
 
 **Professional image processing for e-commerce and social media**
 
+[![CI](https://github.com/matte1782/product-image-optimizer/actions/workflows/ci.yml/badge.svg)](https://github.com/matte1782/product-image-optimizer/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![PyPI](https://img.shields.io/badge/PyPI-coming%20soon-orange.svg)](https://pypi.org/)
 
 Transform product images into perfectly sized, background-removed, professional photos ready for your online store or social media in seconds.
+
+## 🎬 Demo
+
+### Before & After
+
+| Before (Raw Photo) | After (Optimized) |
+|-------------------|-------------------|
+| ![Before](examples/input/product_1.jpg) | ![After](examples/output/product_1.png) |
+| Inconsistent size, background clutter | Perfect 2000x2000px, transparent background |
+
+**Try it yourself:**
+```bash
+product-image-optimizer examples/input/ -o examples/output/ --preset ecommerce_square
+```
+
+### GUI Preview
+
+![GUI Preview](docs/images/gui-preview.gif)
+
+*Modern drag & drop interface with real-time progress tracking*
+
+---
 
 ## ✨ Features
 
